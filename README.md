@@ -1,1 +1,1 @@
-# ff-maker
+# snapit-frame-maker
