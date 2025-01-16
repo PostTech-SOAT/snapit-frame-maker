@@ -36,6 +36,7 @@ public class FramesExtractorService implements FramesExtractor {
             frameNumber++;
         }
 
+        videoInputStream.close();
         frameGrabber.stop();
     }
 
