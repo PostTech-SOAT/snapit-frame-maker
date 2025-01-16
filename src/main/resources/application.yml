@@ -1,0 +1,20 @@
+spring:
+    application:
+        name:
+            application:
+                name: snapit-frame-maker
+
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest
+camel:
+    component:
+        aws2-s3:
+            accessKey:
+            region:
+            secretKey:
+            session-token:
+    springboot:
+        main-run-controller: true
