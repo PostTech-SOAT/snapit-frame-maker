@@ -1,0 +1,36 @@
+name: SonarQube - Quality Gate
+description: Check the quality gate status of a SonarQube project
+inputs:
+  sonarqube_url:
+    description: "URL of the SonarQube server"
+    required: true
+  sonarqube_project_key:
+    description: "Project key of the SonarQube project"
+    required: true
+  sonarqube_token:
+    description: "Token for authenticating with the SonarQube server"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: "21"
+        distribution: "temurin"
+    - name: Cache SonarQube Cloud packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
+        restore-keys: ${{ runner.os }}-sonar
+    - name: Cache Maven packages
+      uses: actions/cache@v4
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
+    - name: Build and analyze
+      run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=PostTech-SOAT_snapit-frame-maker
+      shell: bash

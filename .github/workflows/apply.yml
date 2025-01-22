@@ -1,0 +1,45 @@
+name: Terraform Apply
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  aws_region: us-east-1
+  terraform_version: 1.6.5
+  terraform_directory: ./terraform
+  terragrunt_version: 0.67.10
+  tfvars_file_name: deploy.hcl
+  eks_cluster_name: hexburger-eks-cluster
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: SonarQube - Quality Gate
+        uses: ./.github/quality/quality-gate
+
+  terraform_apply:
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Terraform Apply
+        uses: ./.github/apply
+        with:
+          terraform_version: ${{ env.terraform_version }}
+          terraform_directory: ${{ env.terraform_directory }}
+          aws_region: ${{ env.aws_region }}
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_session_token: ${{ secrets.AWS_SESSION_TOKEN }}
+          github_token: ${{ secrets.MY_GITHUB_TOKEN }}
+          terragrunt_version: ${{ env.terragrunt_version }}
+          tfvars_file_name: ${{ env.tfvars_file_name }}
+          eks_cluster_name: ${{ env.eks_cluster_name }}
