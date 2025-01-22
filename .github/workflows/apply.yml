@@ -11,7 +11,7 @@ env:
   terraform_directory: ./terraform
   terragrunt_version: 0.67.10
   tfvars_file_name: deploy.hcl
-  eks_cluster_name: hexburger-eks-cluster
+  eks_cluster_name: snpait-eks-cluster
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
