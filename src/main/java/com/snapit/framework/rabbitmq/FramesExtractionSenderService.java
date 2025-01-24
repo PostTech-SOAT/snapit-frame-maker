@@ -14,15 +14,15 @@ public class FramesExtractionSenderService implements FramesExtractionEventSende
     private final RabbitTemplate rabbitTemplate;
 
     @Override
-    public void sendFinishedEvent(String filename, String bucketPath, String userEmail) {
+    public void sendFinishedEvent(String id, String filename) {
         rabbitTemplate.convertAndSend("frames-extraction-finished-exchange", "frames",
-                new FramesExtractedEvent(filename, bucketPath, userEmail));
+                new FramesExtractedEvent(id, filename));
     }
 
     @Override
-    public void sendFailedEvent(String filename, String userEmail) {
+    public void sendFailedEvent(String id) {
         rabbitTemplate.convertAndSend("frames-extraction-failed-exchange", "frames",
-                new FramesExtractionFailedEvent(filename, userEmail));
+                new FramesExtractionFailedEvent(id));
     }
 
 }

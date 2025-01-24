@@ -28,13 +28,14 @@ public class CamelRoute extends RouteBuilder {
                 .process(exchange -> {
                     Map<String, String> metadata =
                             (Map<String, String>) exchange.getMessage().getHeader("CamelAwsS3Metadata");
+                    String id = metadata.get("id");
                     String userEmail = metadata.get("email");
                     int frameInterval = parseInt(metadata.get("frameinterval"));
                     InputStream video = exchange.getMessage().getBody(InputStream.class);
                     String filename = exchange.getProperty("CamelAwsS3Key").toString()
                             .replaceAll("(?<!^)[.][^.]*$", "");
                     ProcessController controller = new ProcessController();
-                    controller.processVideoToFrames(new FramesExtractorService(), s3Service, senderService, video,
+                    controller.processVideoToFrames(new FramesExtractorService(), s3Service, senderService, id, video,
                             userEmail, filename, frameInterval);
                 });
     }

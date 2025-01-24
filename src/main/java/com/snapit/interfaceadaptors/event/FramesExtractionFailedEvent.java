@@ -9,8 +9,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class FramesExtractionFailedEvent implements Serializable {
 
-    private String filename;
-
-    private String userEmail;
+    private String id;
 
 }

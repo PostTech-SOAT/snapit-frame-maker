@@ -1,8 +1,8 @@
 package com.snapit.application.usecase;
 
 import com.snapit.application.interfaces.BucketService;
-import com.snapit.application.interfaces.FramesExtractor;
 import com.snapit.application.interfaces.FramesExtractionEventSender;
+import com.snapit.application.interfaces.FramesExtractor;
 
 import java.io.InputStream;
 
@@ -23,18 +23,20 @@ public class ExtractFramesUseCase {
         this.eventSender = eventSender;
     }
 
-    public void processVideoToFrames (InputStream video, String userEmail, String filename, int frameInterval) {
+    public void processVideoToFrames (String id, InputStream video, String userEmail, String filename, int frameInterval) {
         String outputDir = userEmail + "-" + filename;
         try {
             framesExtractor.extractFrames(video, outputDir, frameInterval);
             createZip(outputDir, filename);
 
-            String bucketTarget = userEmail.concat("/").concat(filename).concat(".zip");
+            String zipFile = filename.concat(".zip");
+            String bucketTarget = userEmail.concat("/").concat(zipFile);
             bucketService.sendToBucket(outputDir, filename, bucketTarget);
 
-            eventSender.sendFinishedEvent(filename, bucketTarget, userEmail);
+            eventSender.sendFinishedEvent(id, zipFile);
         } catch (Exception e) {
-            eventSender.sendFailedEvent(filename, userEmail);
+            eventSender.sendFailedEvent(id);
+            e.printStackTrace();
         } finally {
             deleteFiles(outputDir);
         }

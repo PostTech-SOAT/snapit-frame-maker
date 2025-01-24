@@ -2,7 +2,7 @@ package com.snapit.application.interfaces;
 
 public interface FramesExtractionEventSender {
 
-    void sendFinishedEvent(String filename, String bucketPath, String userEmail);
+    void sendFinishedEvent(String id, String filename);
 
-    void sendFailedEvent(String filename, String userEmail);
+    void sendFailedEvent(String id);
 }

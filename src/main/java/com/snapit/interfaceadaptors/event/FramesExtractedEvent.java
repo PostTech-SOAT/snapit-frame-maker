@@ -9,10 +9,8 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class FramesExtractedEvent implements Serializable {
 
+    String id;
+
     private String filename;
-
-    private String bucketPath;
-
-    private String email;
 
 }
