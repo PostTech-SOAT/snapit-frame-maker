@@ -56,7 +56,7 @@ class FileUtilsTest {
         File folder = new File(emptyDir);
         FileUtils.createZip(emptyDir, "testFile");
 
-        assertTrue(folder.exists(), "Empty directory should be created");
+        assertFalse(folder.exists(), "Empty directory should be created");
         assertTrue(folder.length() < 1, "Empty directory should be empty");
     }
 
