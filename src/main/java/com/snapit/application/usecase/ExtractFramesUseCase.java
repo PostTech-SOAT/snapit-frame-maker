@@ -36,7 +36,6 @@ public class ExtractFramesUseCase {
             eventSender.sendFinishedEvent(id, zipFile);
         } catch (Exception e) {
             eventSender.sendFailedEvent(id);
-            e.printStackTrace();
         } finally {
             deleteFiles(outputDir);
         }
