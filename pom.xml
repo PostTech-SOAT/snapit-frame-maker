@@ -15,6 +15,9 @@
 	<description>Cria frames a partir de um video</description>
 	<properties>
 		<java.version>21</java.version>
+		<sonar.organization>postech-soat-hexburguer</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.projectKey>PostTech-SOAT_snapit-frame-maker</sonar.projectKey>
 	</properties>
 
 	<dependencyManagement>

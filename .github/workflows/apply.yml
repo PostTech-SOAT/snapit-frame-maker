@@ -1,10 +1,11 @@
-name: Terraform Plan
+name: Terraform Apply
 
 on:
-  pull_request:
+  push:
+    branches:
+      - main
 
 env:
-  pr_number: ${{ github.event.number }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
@@ -13,8 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
 
       - name: SonarQube - Quality Gate
         uses: PostTech-SOAT/snapit-actions/.github/quality/quality-gate@main
