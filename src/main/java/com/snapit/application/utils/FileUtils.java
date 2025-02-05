@@ -4,10 +4,16 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class FileUtils {
+
+    private static final Logger LOGGER = Logger.getLogger(FileUtils.class.getName());
+
+    private FileUtils() {
+    }
 
     public static void createZip(String outputDir, String originalFilename) throws IOException {
         String zipFilename = outputDir + File.separator + originalFilename + ".zip";
@@ -47,7 +53,7 @@ public class FileUtils {
 
     private static void deleteFile(File file) {
         if (!file.delete()) {
-            System.err.println("Failed to delete file: " + file.getAbsolutePath());
+            LOGGER.severe("Failed to delete file: " + file.getAbsolutePath());
         }
     }
 
