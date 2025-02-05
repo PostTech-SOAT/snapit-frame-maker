@@ -36,6 +36,7 @@ class FileUtilsTest {
     void testCreateZip() throws IOException {
         FileUtils.createZip(TEST_DIR, "testFile");
         File zipFile = new File(TEST_DIR + File.separator + ZIP_FILE);
+
         assertTrue(zipFile.exists(), "Zip file should be created");
 
         try (ZipFile zip = new ZipFile(zipFile)) {
@@ -47,6 +48,7 @@ class FileUtilsTest {
     void testCreateZipWithNullFile() throws IOException {
         FileUtils.createZip("nullDir", "testFile");
         File folder = new File("nullDir");
+
         assertFalse(folder.exists(), "Null directory should not be created");
     }
 
@@ -64,6 +66,7 @@ class FileUtilsTest {
     void testDeleteFiles() {
         FileUtils.deleteFiles(TEST_DIR);
         File dir = new File(TEST_DIR);
+
         assertFalse(dir.exists(), "Directory should be deleted");
     }
 }
