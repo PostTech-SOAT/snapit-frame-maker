@@ -8,6 +8,7 @@ import org.bytedeco.javacv.Java2DFrameConverter;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 import static java.lang.String.format;
@@ -15,7 +16,7 @@ import static java.lang.String.format;
 public class FramesExtractorService implements FramesExtractor {
 
     @Override
-    public void extractFrames(InputStream videoInputStream, String outputDir, int intervalSeconds) throws Exception {
+    public void extractFrames(InputStream videoInputStream, String outputDir, int intervalSeconds) throws IOException {
         new File(outputDir).mkdirs();
 
         FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(videoInputStream);
