@@ -1,0 +1,20 @@
+{{- if .Values.persistentVolume.enabled }}
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ .Values.chartName }}-pv
+  labels: 
+    {{- with .Values.podLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  capacity:
+    storage: {{ .Values.persistentVolume.storage }}
+  volumeMode: {{ .Values.persistentVolume.volumeModes }}
+  accessModes:
+    - {{ .Values.persistentVolume.accessModes }}
+  persistentVolumeReclaimPolicy: {{ .Values.persistentVolume.persistentVolumeReclaimPolicy }}
+  storageClassName: {{ .Values.persistentVolume.storageClassName }}
+  hostPath:
+    path: {{ .Values.persistentVolume.hostPath }}
+{{- end }}

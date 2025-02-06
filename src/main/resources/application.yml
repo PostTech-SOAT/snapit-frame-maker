@@ -5,10 +5,10 @@ spring:
                 name: snapit-frame-maker
 
     rabbitmq:
-        host: localhost
+        host: a5c26c3dc1a9746a0a098ca86b70b402-1576489231.us-east-1.elb.amazonaws.com
         port: 5672
-        username: guest
-        password: guest
+        username: hexqueue
+        password: 1xo4r9VIU4ARLW3f
 camel:
     component:
         aws2-s3:
