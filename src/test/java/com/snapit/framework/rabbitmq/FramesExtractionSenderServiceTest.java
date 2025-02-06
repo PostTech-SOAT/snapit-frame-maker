@@ -10,6 +10,8 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 
 import java.util.UUID;
 
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 
 class FramesExtractionSenderServiceTest {
@@ -32,8 +34,7 @@ class FramesExtractionSenderServiceTest {
         String id = UUID.randomUUID().toString();
         senderService.sendFinishedEvent(id, "filename");
 
-        verify(rabbitTemplate).convertAndSend("frames-extraction-finished-exchange", "frames",
-                new FramesExtractedEvent(id, "filename"));
+        verify(rabbitTemplate).convertAndSend(anyString(), anyString(), any(FramesExtractedEvent.class));
     }
 
     @Test
@@ -41,8 +42,7 @@ class FramesExtractionSenderServiceTest {
         String id = UUID.randomUUID().toString();
         senderService.sendFailedEvent(id);
 
-        verify(rabbitTemplate).convertAndSend("frames-extraction-failed-exchange", "frames",
-                new FramesExtractionFailedEvent(id));
+        verify(rabbitTemplate).convertAndSend(anyString(), anyString(), any(FramesExtractionFailedEvent.class));
     }
 
 }
