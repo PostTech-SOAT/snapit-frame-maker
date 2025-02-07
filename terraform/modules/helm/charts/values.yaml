@@ -58,7 +58,7 @@ ingress:
   hosts:
     - host: chart-example.local
       paths:
-        - path: /
+        - path: /frame-maker
           pathType: ImplementationSpecific
   tls: []
   #  - secretName: chart-example-tls

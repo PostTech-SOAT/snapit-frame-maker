@@ -20,8 +20,8 @@ COPY src ./src
 #Buildando a aplicação
 RUN mvn package -DskipTests
 
-#Expondo a porta 28081
-EXPOSE 28081
+#Expondo a porta 28083
+EXPOSE 28083
 
 #Executando a aplicação
 ENTRYPOINT ["java", "-jar", "/opt/app/target/snapit-frame-maker-0.0.1-SNAPSHOT.jar", "-Xms2048M", "-Xmx3072M"]

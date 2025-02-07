@@ -18,3 +18,16 @@ camel:
             session-token:
     springboot:
         main-run-controller: true
+
+management:
+    server:
+        port: 28083
+    endpoint:
+        health:
+            probes:
+                enabled: true
+    health:
+        livenessstate:
+            enabled: true
+        readinessstate:
+            enabled: true
