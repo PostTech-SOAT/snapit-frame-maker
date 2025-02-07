@@ -12,7 +12,8 @@ import org.apache.camel.component.aws2.s3.AWS2S3Configuration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.AwsSessionCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.services.s3.S3Client;
 
 import static software.amazon.awssdk.regions.Region.US_EAST_1;
@@ -46,8 +47,8 @@ public class S3Configuration {
 
     @Bean("S3Client")
     public S3Client s3Client(CamelContext camelContext){
-        ProfileCredentialsProvider credentialsProvider = ProfileCredentialsProvider.builder()
-                .build();
+        StaticCredentialsProvider credentialsProvider = StaticCredentialsProvider.create(
+                AwsSessionCredentials.create(accessKey, secretKey, sessionToken));
         S3Client s3Client = S3Client.builder()
                 .region(US_EAST_1)
                 .credentialsProvider(credentialsProvider)
