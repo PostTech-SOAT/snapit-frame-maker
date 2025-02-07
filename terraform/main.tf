@@ -25,11 +25,19 @@ module "kubernetes_environment" {
   kubernetes_secrets_data = {
     DATABASE_USER     = local.secret_data.username
     DATABASE_PASSWORD = local.secret_data.password
+    AWS_ACCESS_KEY    = local.secret_data.accessKey
+    AWS_SECRET_KEY    = local.secret_data.secretKey
+    AWS_REGION        = local.secret_data.region
+    AWS_SESSION_TOKEN = local.secret_data.session-token
   }
 }
 
 locals {
-  secret_data = jsondecode(data.aws_secretsmanager_secret_version.my_secret_version.secret_string)
+  secret_data   = jsondecode(data.aws_secretsmanager_secret_version.my_secret_version.secret_string)
+  accessKey     = var.AWS_ACCESS_KEY
+  secretKey     = var.AWS_SECRET_KEY
+  region        = var.AWS_REGION
+  session-token = var.AWS_SESSION_TOKEN
 }
 
 output "name" {

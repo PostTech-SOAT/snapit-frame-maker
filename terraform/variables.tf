@@ -19,3 +19,18 @@ variable "ingress_nginx_name" {
   type = string
 }
 
+variable "AWS_ACCESS_KEY" {
+  type = string
+}
+
+variable "AWS_SECRET_KEY" {
+  type = string
+}
+
+variable "AWS_REGION" {
+  type = string
+}
+
+variable "AWS_SESSION_TOKEN" {
+  type = string
+}
