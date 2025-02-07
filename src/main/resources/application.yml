@@ -13,11 +13,13 @@ camel:
     component:
         aws2-s3:
             accessKey: ${AWS_ACCESS_KEY_ID}
-            region: ${AWS_REGION}
             secretKey: ${AWS_SECRET_ACCESS_KEY}
-            session-token: ${AWS_SESSION_TOKEN}
-    springboot:
-        main-run-controller: true
+            sessionToken: ${AWS_SESSION_TOKEN}
+            region: ${AWS_REGION}
+            # Parâmetros adicionais:
+            useDefaultCredentialsProvider: false
+        springboot:
+            main-run-controller: true
 
 management:
     server:
