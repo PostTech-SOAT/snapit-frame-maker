@@ -5,7 +5,7 @@ spring:
                 name: snapit-frame-maker
 
     rabbitmq:
-        host: a5c26c3dc1a9746a0a098ca86b70b402-1576489231.us-east-1.elb.amazonaws.com
+        host: ab6737414eea54b5fbbf7d8071ae75d1-1338972412.us-east-1.elb.amazonaws.com
         port: 5672
         username: hexqueue
         password: 1xo4r9VIU4ARLW3f
