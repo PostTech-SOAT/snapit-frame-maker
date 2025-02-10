@@ -18,7 +18,7 @@
 		<sonar.organization>postech-soat-hexburguer</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.projectKey>PostTech-SOAT_snapit-frame-maker</sonar.projectKey>
-		<sonar.exclusions>src/main/java/com/snapit/framework/aws/S3Configuration.java,src/main/java/com/snapit/framework/rabbitmq/RabbitMQConfig.java,src/main/java/com/snapit/framework/camel/CamelRoute.java,src/main/java/com/snapit/framework/camel/CamelConfig.java,src/main/java/com/snapit/framework/camel/CamelContextConfig.java,src/main/java/com/snapit/framework/camel/CamelRouteConfig.java,src/main/java/com/snapit/SnapitFrameMakerApplication.java,src/java/com/snapit/interfaceadaptors/event/*.java</sonar.exclusions>
+		<sonar.exclusions>src/main/java/com/snapit/framework/aws/S3Configuration.java,src/main/java/com/snapit/framework/rabbitmq/RabbitMQConfig.java,src/main/java/com/snapit/framework/camel/CamelRoute.java,src/main/java/com/snapit/framework/camel/CamelConfig.java,src/main/java/com/snapit/framework/camel/CamelContextConfig.java,src/main/java/com/snapit/framework/camel/CamelRouteConfig.java,src/main/java/com/snapit/SnapitFrameMakerApplication.java,src/main/java/com/snapit/interfaceadaptors/event/*.java</sonar.exclusions>
 	</properties>
 
 	<dependencyManagement>
