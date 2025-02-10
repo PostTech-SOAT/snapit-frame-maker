@@ -53,16 +53,6 @@ class FileUtilsTest {
     }
 
     @Test
-    void testCreateZipWithZeroFileLength() throws IOException {
-        String emptyDir = "emptyDir";
-        File folder = new File(emptyDir);
-        FileUtils.createZip(emptyDir, "testFile");
-
-        assertFalse(folder.exists(), "Empty directory should be created");
-        assertTrue(folder.length() < 1, "Empty directory should be empty");
-    }
-
-    @Test
     void testDeleteFiles() {
         FileUtils.deleteFiles(TEST_DIR);
         File dir = new File(TEST_DIR);

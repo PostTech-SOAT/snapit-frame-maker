@@ -20,7 +20,7 @@ public class FileUtils {
         File dir = new File(outputDir);
         File[] files = dir.listFiles((d, name) -> name.endsWith(".jpg"));
 
-        if (files != null && files.length > 0) {
+        if (files != null) {
             try (ZipOutputStream zos = new ZipOutputStream(new FileOutputStream(zipFilename))) {
                 for (File file : files) {
                     try (FileInputStream fis = new FileInputStream(file)) {
