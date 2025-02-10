@@ -6,6 +6,14 @@ on:
       - main
 
 env:
+  aws_region: us-east-1
+  terraform_version: 1.6.5
+  terraform_directory: ./terraform
+  terragrunt_version: 0.67.10
+  tfvars_file_name: deploy.hcl
+  eks_cluster_name: snapit-eks-cluster
+  ECR_REPOSITORY: snapit-frame-maker
+  pr_number: ${{ github.event.number }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
@@ -19,3 +27,24 @@ jobs:
         uses: PostTech-SOAT/snapit-actions/.github/quality/quality-gate@main
         with:
           sonarqube_token: ${{ secrets.SONAR_TOKEN }}
+
+  terraform_apply:
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Terraform Apply
+        uses: PostTech-SOAT/snapit-actions/.github/terraform-apply@main
+        with:
+          terraform_version: ${{ env.terraform_version }}
+          terraform_directory: ${{ env.terraform_directory }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+          github_token: ${{ secrets.MY_GITHUB_TOKEN }}
+          terragrunt_version: ${{ env.terragrunt_version }}
+          tfvars_file_name: ${{ env.tfvars_file_name }}
+          eks_cluster_name: ${{ env.eks_cluster_name }}
+          pr_number: ${{ env.pr_number }}

@@ -4,11 +4,18 @@ on:
   pull_request:
 
 env:
+  terraform_version: 1.6.5
+  terraform_directory: ./terraform
+  terragrunt_version: 0.67.10
+  tfvars_file_name: deploy.hcl
+  eks_cluster_name: snapit-eks-cluster
+  ECR_REPOSITORY: snapit-frame-maker
   pr_number: ${{ github.event.number }}
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 jobs:
+
   quality:
     runs-on: ubuntu-latest
     steps:
@@ -20,3 +27,40 @@ jobs:
         uses: PostTech-SOAT/snapit-actions/.github/quality/quality-gate@main
         with:
           sonarqube_token: ${{ secrets.SONAR_TOKEN }}
+  
+  publish_ecr:
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Publish to ECR
+        uses: PostTech-SOAT/snapit-actions/.github/publish@main
+        with:
+          AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}
+
+  terraform_plan:
+    needs: publish_ecr
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == false
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Terraform Plan
+        uses: PostTech-SOAT/snapit-actions/.github/terraform-plan@main
+        with:
+          terraform_version: ${{ env.terraform_version }}
+          terraform_directory: ${{ env.terraform_directory }}
+          pr_number: ${{ env.pr_number }}
+          github_token: ${{ secrets.MY_GITHUB_TOKEN }}
+          terragrunt_version: ${{ env.terragrunt_version }}
+          tfvars_file_name: ${{ env.tfvars_file_name }}
+          eks_cluster_name: ${{ env.eks_cluster_name }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_SESSION_TOKEN: ${{ secrets.AWS_SESSION_TOKEN }}
+          AWS_REGION: ${{ secrets.AWS_REGION }}

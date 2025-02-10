@@ -5,16 +5,31 @@ spring:
                 name: snapit-frame-maker
 
     rabbitmq:
-        host: localhost
+        host: abc666f7747244c7f82dace641f73e29-1183275588.us-east-1.elb.amazonaws.com
         port: 5672
-        username: guest
-        password: guest
+        username: hexqueue
+        password: 1xo4r9VIU4ARLW3f
 camel:
     component:
         aws2-s3:
-            accessKey:
-            region:
-            secretKey:
-            session-token:
-    springboot:
-        main-run-controller: true
+            accessKey: ${AWS_ACCESS_KEY_ID}
+            secretKey: ${AWS_SECRET_ACCESS_KEY}
+            sessionToken: ${AWS_SESSION_TOKEN}
+            region: ${AWS_REGION}
+            # Parâmetros adicionais:
+            useDefaultCredentialsProvider: false
+        springboot:
+            main-run-controller: true
+
+management:
+    server:
+        port: 28083
+    endpoint:
+        health:
+            probes:
+                enabled: true
+    health:
+        livenessstate:
+            enabled: true
+        readinessstate:
+            enabled: true
