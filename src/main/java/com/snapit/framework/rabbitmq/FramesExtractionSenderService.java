@@ -20,9 +20,9 @@ public class FramesExtractionSenderService implements FramesExtractionEventSende
     }
 
     @Override
-    public void sendFailedEvent(String id) {
+    public void sendFailedEvent(String id, String filename, String userEmail) {
         rabbitTemplate.convertAndSend("frames-extraction-failed-exchange", "frames",
-                new FramesExtractionFailedEvent(id));
+                new FramesExtractionFailedEvent(id, filename, userEmail));
     }
 
 }

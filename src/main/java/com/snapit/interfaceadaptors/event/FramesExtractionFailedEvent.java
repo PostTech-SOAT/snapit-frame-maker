@@ -11,4 +11,8 @@ public class FramesExtractionFailedEvent implements Serializable {
 
     private String id;
 
+    private String filename;
+
+    private String userEmail;
+
 }

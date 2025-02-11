@@ -15,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -51,7 +51,7 @@ class ExtractFramesUseCaseTest {
         assertFalse(new File("email@test.com-dummy").exists());
         verify(eventSender).sendFinishedEvent(any(String.class), any(String.class));
         verify(eventSender, times(1)).sendFinishedEvent(any(String.class), any(String.class));
-        verify(eventSender, times(0)).sendFailedEvent(any(String.class));
+        verify(eventSender, times(0)).sendFailedEvent(any(String.class), any(String.class), any(String.class));
     }
 
     @Test
@@ -60,15 +60,15 @@ class ExtractFramesUseCaseTest {
         InputStream txt = new FileInputStream("src/test/resources/video/dummy.txt");
 
         doNothing().when(bucketService).sendToBucket(any(String.class), any(String.class), any(String.class));
-        doNothing().when(eventSender).sendFailedEvent(any(String.class));
+        doNothing().when(eventSender).sendFailedEvent(any(String.class), any(String.class), any(String.class));
 
         useCase.processVideoToFrames
                 (UUID.randomUUID().toString(), txt, "email@test.com", "dummy", 5);
 
         assertFalse(new File("email@test.com-dummy").exists());
-        verify(eventSender).sendFailedEvent(any(String.class));
+        verify(eventSender).sendFailedEvent(any(String.class), any(String.class), any(String.class));
         verify(eventSender, times(0)).sendFinishedEvent(any(String.class), any(String.class));
-        verify(eventSender, times(1)).sendFailedEvent(any(String.class));
+        verify(eventSender, times(1)).sendFailedEvent(any(String.class), any(String.class), any(String.class));
     }
 
 }

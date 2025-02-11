@@ -35,7 +35,7 @@ public class ExtractFramesUseCase {
 
             eventSender.sendFinishedEvent(id, zipFile);
         } catch (Exception e) {
-            eventSender.sendFailedEvent(id);
+            eventSender.sendFailedEvent(id, filename, userEmail);
         } finally {
             deleteFiles(outputDir);
         }
