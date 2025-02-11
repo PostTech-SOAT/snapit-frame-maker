@@ -32,12 +32,14 @@ public class ExtractFramesStepDefinitions {
 
     private String videoId;
     private String filename;
+    private String userEmail;
     private InputStream videoFile;
 
     @Dado("um ID de vídeo válido e um nome de arquivo")
     public void umIDDeVideoValidoENomeDeArquivo() {
         videoId = UUID.randomUUID().toString();
         filename = "video.mp4";
+        userEmail = "test@email.com";
         rabbitTemplate = mock(RabbitTemplate.class);
         senderService = new FramesExtractionSenderService(rabbitTemplate);
     }
@@ -45,6 +47,7 @@ public class ExtractFramesStepDefinitions {
     @Dado("um ID de vídeo válido")
     public void umIDDeVideoValido() {
         videoId = UUID.randomUUID().toString();
+        userEmail = "test@email.com";
         rabbitTemplate = mock(RabbitTemplate.class);
         senderService = new FramesExtractionSenderService(rabbitTemplate);
     }
@@ -56,7 +59,7 @@ public class ExtractFramesStepDefinitions {
 
     @Quando("o evento de falha na extração for enviado")
     public void oEventoDeFalhaNaExtracaoForEnviado() {
-        senderService.sendFailedEvent(videoId);
+        senderService.sendFailedEvent(videoId, filename, userEmail);
     }
 
     @Então("a mensagem deve ser publicada no RabbitMQ no exchange {string}")
@@ -90,12 +93,12 @@ public class ExtractFramesStepDefinitions {
     @Então("o evento de extração concluída deve ser enviado")
     public void oEventoDeExtracaoConcluidaDeveSerEnviado() {
         verify(eventSender, times(1)).sendFinishedEvent(any(String.class), any(String.class));
-        verify(eventSender, times(0)).sendFailedEvent(any(String.class));
+        verify(eventSender, times(0)).sendFailedEvent(any(String.class), any(String.class), any(String.class));
     }
 
     @Então("o evento de falha na extração deve ser enviado")
     public void oEventoDeFalhaNaExtracaoDeveSerEnviado() {
-        verify(eventSender, times(1)).sendFailedEvent(any(String.class));
+        verify(eventSender, times(1)).sendFailedEvent(any(String.class), any(String.class), any(String.class));
         verify(eventSender, times(0)).sendFinishedEvent(any(String.class), any(String.class));
     }
 

@@ -40,7 +40,7 @@ class FramesExtractionSenderServiceTest {
     @Test
     void shouldSendFailedEvent() {
         String id = UUID.randomUUID().toString();
-        senderService.sendFailedEvent(id);
+        senderService.sendFailedEvent(id, "test.mp4", "email@test.com");
 
         verify(rabbitTemplate).convertAndSend(anyString(), anyString(), any(FramesExtractionFailedEvent.class));
     }

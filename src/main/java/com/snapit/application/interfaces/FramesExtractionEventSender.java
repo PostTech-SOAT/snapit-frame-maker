@@ -4,5 +4,5 @@ public interface FramesExtractionEventSender {
 
     void sendFinishedEvent(String id, String filename);
 
-    void sendFailedEvent(String id);
+    void sendFailedEvent(String id, String filename, String userEmail);
 }
